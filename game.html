@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Game... - HTML5 Games</title>
+    <meta name="description" content="Play this free HTML5 game online instantly without download. Enjoy smooth gameplay, high-quality graphics, and responsive controls.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="">
+    <meta property="og:title" content="Loading Game... - HTML5 Games">
+    <meta property="og:description" content="Play this free HTML5 game online instantly without download. Enjoy smooth gameplay, high-quality graphics, and responsive controls.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/game-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <style>
+        .game-frame iframe {
+            width: 100%;
+            height: 550px;
+            border: none;
+            display: block;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 550px;
+            background-color: #f5f5f5;
+        }
+        
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #ff6b6b;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>HTML5Games</h1>
+        </div>
+        <nav class="main-nav" aria-label="Main Navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">New</a></li>
+                <li><a href="#">Top</a></li>
+                <li><a href="#">Match 3</a></li>
+                <li><a href="#">Bubble Shooter</a></li>
+                <li><a href="#">Puzzle</a></li>
+                <li><a href="#">Quiz</a></li>
+                <li><a href="#">Card</a></li>
+                <li><a href="#">Girls</a></li>
+                <li><a href="#">Jump & Run</a></li>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Racing</a></li>
+                <li><a href="#">Sports</a></li>
+                <li><a href="#">Multiplayer</a></li>
+                <li><a href="#">All Games</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="game-detail-container">
+        <section class="game-info-section">
+            <div class="game-header">
+                <h1 id="game-title">Loading Game...</h1>
+                <div class="game-meta">
+                    <span class="game-category" id="game-category">Loading Category...</span>
+                    <span class="game-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>4.2/5</span>
+                    </span>
+                    <span class="game-plays"><i class="fas fa-gamepad"></i> <span id="game-plays">0</span> plays</span>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="game-frame-container">
+                    <div class="game-frame" id="game-frame">
+                        <!-- Game will load here -->
+                        <div class="loading-spinner" id="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>Loading game, please wait...</p>
+                        </div>
+                    </div>
+                    <div class="game-controls">
+                        <button class="control-button fullscreen-btn" id="fullscreen-btn"><i class="fas fa-expand"></i> Fullscreen</button>
+                        <button class="control-button like-btn" id="like-btn"><i class="far fa-heart"></i> Favorite</button>
+                        <button class="control-button share-btn" id="share-btn"><i class="fas fa-share-alt"></i> Share</button>
+                    </div>
+                </div>
+
+                <div class="game-description" id="game-description">
+                    <h2>Game Description</h2>
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="related-games">
+            <h2>Related Games</h2>
+            <div class="games-grid" id="related-games" aria-label="Related Games Collection">
+                <!-- Related games will be dynamically generated -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="about.html">What are HTML5 Games?</a></li>
+                    <li><a href="#">Publishers</a></li>
+                    <li><a href="#">Developers</a></li>
+                    <li><a href="#">Business Services</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023-2024 HTML5Games.com</p>
+        </div>
+    </footer>
+
+    <script src="scripts/games-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const gameId = params.get('id');
+            
+            if (!gameId) {
+                showError("Game ID not specified, please return to the homepage to select a game");
+                return;
+            }
+            
+            // Find the game in the game data
+            const game = findGameById(gameId);
+            
+            if (!game) {
+                showError("Game not found, please return to the homepage to select another game");
+                return;
+            }
+            
+            // Update page title and meta tags for SEO
+            updateMetaTags(game);
+            
+            // Update game information
+            document.getElementById('game-title').textContent = game.title;
+            document.getElementById('game-category').textContent = game.category;
+            
+            // Generate random play count (in a real project, this should be from the server)
+            const playCount = Math.floor(Math.random() * 10000) + 1000;
+            document.getElementById('game-plays').textContent = playCount.toLocaleString();
+            
+            // Load game iframe
+            loadGameIframe(game);
+            
+            // Update game description
+            updateGameDescription(game);
+            
+            // Load related games
+            loadRelatedGames(game);
+            
+            // Setup buttons
+            setupButtons(game);
+
+            // Add structured data for the game
+            addGameStructuredData(game, playCount);
+        });
+        
+        // Find game by ID in all games
+        function findGameById(id) {
+            const allGames = [
+                ...gamesData.newGames,
+                ...gamesData.popularGames,
+                ...gamesData.recommendedGames
+            ];
+            
+            return allGames.find(game => game.id === id);
+        }
+        
+        // Update meta tags for SEO
+        function updateMetaTags(game) {
+            // Update page title
+            const pageTitle = `${game.title} - Play Free ${game.category} Game | HTML5 Games`;
+            document.title = pageTitle;
+            
+            // Update meta description
+            const metaDescription = `Play ${game.title} - a free ${game.category} game online! No download required, instant play in your browser. Enjoy this HTML5 game with stunning graphics and smooth gameplay.`;
+            document.querySelector('meta[name="description"]').setAttribute('content', metaDescription);
+            
+            // Update Open Graph tags
+            document.querySelector('meta[property="og:title"]').setAttribute('content', pageTitle);
+            document.querySelector('meta[property="og:description"]').setAttribute('content', metaDescription);
+            
+            // Set canonical URL
+            const canonicalUrl = `${window.location.origin}${window.location.pathname}?id=${game.id}`;
+            document.querySelector('link[rel="canonical"]').setAttribute('href', canonicalUrl);
+            
+            // Update OG URL
+            document.querySelector('meta[property="og:url"]').setAttribute('content', canonicalUrl);
+            
+            // Update OG image if game has image
+            if (game.image) {
+                document.querySelector('meta[property="og:image"]').setAttribute('content', game.image);
+            }
+        }
+        
+        // Add structured data for the game
+        function addGameStructuredData(game, playCount) {
+            const gameSchema = {
+                "@context": "https://schema.org",
+                "@type": "VideoGame",
+                "name": game.title,
+                "description": document.querySelector('#game-description p').textContent,
+                "gamePlatform": "Web Browser",
+                "applicationCategory": "Game",
+                "genre": game.category,
+                "image": game.image,
+                "url": window.location.href,
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.2",
+                    "ratingCount": playCount
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD",
+                    "availability": "https://schema.org/InStock"
+                }
+            };
+            
+            // Add the schema to the page
+            const script = document.createElement('script');
+            script.type = "application/ld+json";
+            script.innerHTML = JSON.stringify(gameSchema);
+            document.head.appendChild(script);
+        }
+        
+        // Show error message
+        function showError(message) {
+            document.getElementById('game-title').textContent = "Error";
+            document.getElementById('game-category').textContent = "Error";
+            document.getElementById('game-frame').innerHTML = `
+                <div style="text-align: center; padding: 50px; background: #f8f8f8;">
+                    <h2 style="color: #ff6b6b;">😕 ${message}</h2>
+                    <p><a href="index.html" style="color: #333; text-decoration: underline;">Return to Homepage</a></p>
+                </div>
+            `;
+            document.getElementById('game-description').innerHTML = "";
+        }
+        
+        // Load game iframe
+        function loadGameIframe(game) {
+            if (!game.iframeUrl) {
+                document.getElementById('game-frame').innerHTML = `
+                    <div style="text-align: center; padding: 50px; background: #f8f8f8;">
+                        <h2>This game is currently unavailable</h2>
+                        <p>Please try again later or choose another game</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const gameFrame = document.getElementById('game-frame');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            
+            // Create iframe
+            const iframe = document.createElement('iframe');
+            iframe.src = game.iframeUrl;
+            iframe.title = game.title;
+            iframe.setAttribute('allowfullscreen', 'true');
+            iframe.style.display = 'none';
+            
+            // When iframe is loaded, hide loading animation and show iframe
+            iframe.onload = () => {
+                loadingSpinner.style.display = 'none';
+                iframe.style.display = 'block';
+            };
+            
+            // Add iframe to page
+            gameFrame.appendChild(iframe);
+        }
+        
+        // Update game description
+        function updateGameDescription(game) {
+            // In a real project, game description should be part of the game data
+            // Here we generate example description based on game category
+            
+            let description = '';
+            
+            switch (game.category) {
+                case 'shooting':
+                    description = `《${game.title}》 is a thrilling shooting game where players need to aim accurately and challenge their reaction and shooting skills. The game features various weapons and levels, providing players with a rich gaming experience.`;
+                    break;
+                case 'puzzle':
+                    description = `《${game.title}》 is a brain-training puzzle game that challenges players' intelligence through puzzles and thinking. The game is designed cleverly, suitable for players of all ages, both fun and beneficial.`;
+                    break;
+                case 'casual':
+                    description = `《${game.title}》 is a light and fun casual game that is easy to get started but challenging. You can start the game at any time and enjoy a moment of relaxation, which is the perfect choice for killing time.`;
+                    break;
+                case 'adventure':
+                    description = `《${game.title}》 is an exciting adventure game where players will embark on a wonderful journey to explore the unknown world and solve various puzzles and challenges. Each level has new surprises waiting to be discovered.`;
+                    break;
+                case 'match 3':
+                    description = `《${game.title}》 is a classic match 3 game where players score by matching the same color or shape elements. The game has a fast rhythm and is full of fun, easy to get started but difficult to master, making people unable to stop.`;
+                    break;
+                default:
+                    description = `《${game.title}》 is a thrilling HTML5 game with smooth operation and beautiful graphics. No need to download, just click and play, bringing you convenient game fun.`;
+            }
+            
+            // Game operation tips
+            let controls = '';
+            if (game.category === 'shooting' || game.category === 'adventure') {
+                controls = 'Use WASD or arrow keys to move, aim and shoot with the mouse. ';
+            } else if (game.category === 'puzzle' || game.category === 'match 3') {
+                controls = 'Use the mouse to click and drag the game elements to complete the match or puzzle. ';
+            } else {
+                controls = 'Operate according to the game prompt, usually using mouse clicks or keyboard control. ';
+            }
+            
+            document.getElementById('game-description').innerHTML = `
+                <h2>Game Description</h2>
+                <p>${description}</p>
+                
+                <h2>Game Features</h2>
+                <ul>
+                    <li>Beautiful HTML5 Game Graphics</li>
+                    <li>Smooth Gaming Experience</li>
+                    <li>No Need to Download, Just Click and Play</li>
+                    <li>Suitable for Various Devices and Browsers</li>
+                    <li>Completely Free</li>
+                </ul>
+                
+                <h2>How to Play</h2>
+                <p>${controls}</p>
+
+                <h2>Why Play ${game.title}</h2>
+                <p>Experience the excitement of ${game.title} right in your web browser! As one of our most popular ${game.category} games, this title offers hours of fun without requiring any downloads or installations. Perfect for a quick gaming session during a break or a longer adventure when you have more time.</p>
+            `;
+        }
+        
+        // Load related games
+        function loadRelatedGames(game) {
+            // Get all games
+            const allGames = [
+                ...gamesData.newGames,
+                ...gamesData.popularGames,
+                ...gamesData.recommendedGames
+            ];
+            
+            // Find games of the same category as the current game, excluding the current game
+            let relatedGames = allGames.filter(g => 
+                g.category === game.category && g.id !== game.id
+            );
+            
+            // If related games are less than 4, add other category's popular games
+            if (relatedGames.length < 4) {
+                const otherGames = allGames.filter(g => 
+                    g.category !== game.category && g.id !== game.id
+                );
+                
+                // Randomly sort other games
+                otherGames.sort(() => Math.random() - 0.5);
+                
+                // Add enough games until reaching 4
+                relatedGames = [
+                    ...relatedGames,
+                    ...otherGames.slice(0, 4 - relatedGames.length)
+                ];
+            } else {
+                // If related games are more than 4, randomly select 4
+                relatedGames.sort(() => Math.random() - 0.5);
+                relatedGames = relatedGames.slice(0, 4);
+            }
+            
+            // Display related games
+            const relatedGamesContainer = document.getElementById('related-games');
+            relatedGamesContainer.innerHTML = '';
+            
+            relatedGames.forEach(relatedGame => {
+                const gameCard = document.createElement('div');
+                gameCard.classList.add('game-card');
+                
+                // 简化图片加载，确保能正确显示
+                const imageSrc = relatedGame.image || `https://via.placeholder.com/300x200?text=${relatedGame.title}`;
+                
+                gameCard.innerHTML = `
+                    <a href="game.html?id=${relatedGame.id}" title="Play ${relatedGame.title}">
+                        <img src="${imageSrc}" alt="${relatedGame.title}" class="game-image" loading="lazy">
+                        <div class="game-info">
+                            <h3 class="game-title">${relatedGame.title}</h3>
+                            <p class="game-category">${relatedGame.category}</p>
+                        </div>
+                    </a>
+                `;
+                
+                relatedGamesContainer.appendChild(gameCard);
+            });
+        }
+        
+        // Setup buttons
+        function setupButtons(game) {
+            // Fullscreen button
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', () => {
+                    const iframe = document.querySelector('#game-frame iframe');
+                    if (!iframe) return;
+                    
+                    if (iframe.requestFullscreen) {
+                        iframe.requestFullscreen();
+                    } else if (iframe.mozRequestFullScreen) { // Firefox
+                        iframe.mozRequestFullScreen();
+                    } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                        iframe.webkitRequestFullscreen();
+                    } else if (iframe.msRequestFullscreen) { // IE/Edge
+                        iframe.msRequestFullscreen();
+                    }
+                });
+            }
+            
+            // Favorite button
+            const likeBtn = document.getElementById('like-btn');
+            if (likeBtn) {
+                likeBtn.addEventListener('click', () => {
+                    if (likeBtn.querySelector('i').classList.contains('far')) {
+                        likeBtn.querySelector('i').classList.replace('far', 'fas');
+                        alert(`《${game.title}》 has been added to favorites!`);
+                    } else {
+                        likeBtn.querySelector('i').classList.replace('fas', 'far');
+                        alert(`《${game.title}》 has been removed from favorites!`);
+                    }
+                });
+            }
+            
+            // Share button
+            const shareBtn = document.getElementById('share-btn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', () => {
+                    // Check if web share API is supported
+                    if (navigator.share) {
+                        navigator.share({
+                            title: `${game.title} - HTML5 Games`,
+                            text: `Come play this fun HTML5 game: ${game.title}`,
+                            url: window.location.href
+                        })
+                        .catch(error => console.log('Share failed:', error));
+                    } else {
+                        // If share API is not supported, copy link to clipboard
+                        navigator.clipboard.writeText(window.location.href)
+                            .then(() => alert('Game link has been copied to clipboard, you can share it with friends!'))
+                            .catch(() => alert('Unable to copy link, please manually copy the URL from the browser address bar.'));
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

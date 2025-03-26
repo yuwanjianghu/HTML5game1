@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西部狙击手 - HTML5游戏</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/game-detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>HTML5Games</h1>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="#">最新</a></li>
+                <li><a href="#">最佳</a></li>
+                <li><a href="#">三消类</a></li>
+                <li><a href="#">泡泡射击</a></li>
+                <li><a href="#" class="active">益智</a></li>
+                <li><a href="#">问答</a></li>
+                <li><a href="#">卡牌</a></li>
+                <li><a href="#">女孩</a></li>
+                <li><a href="#">跳跃跑酷</a></li>
+                <li><a href="#">街机</a></li>
+                <li><a href="#">赛车</a></li>
+                <li><a href="#">体育</a></li>
+                <li><a href="#">多人</a></li>
+                <li><a href="#">所有游戏</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="game-detail-container">
+        <section class="game-info-section">
+            <div class="game-header">
+                <h1>西部狙击手</h1>
+                <div class="game-meta">
+                    <span class="game-category">射击</span>
+                    <span class="game-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>4.2/5</span>
+                    </span>
+                    <span class="game-plays"><i class="fas fa-gamepad"></i> 12,345 次游玩</span>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="game-frame-container">
+                    <div class="game-frame">
+                        <!-- 这里在真实项目中会嵌入游戏iframe -->
+                        <div class="game-placeholder">
+                            <img src="https://via.placeholder.com/800x500?text=西部狙击手" alt="西部狙击手">
+                            <button class="play-button"><i class="fas fa-play"></i> 开始游戏</button>
+                        </div>
+                    </div>
+                    <div class="game-controls">
+                        <button class="control-button fullscreen-btn"><i class="fas fa-expand"></i> 全屏</button>
+                        <button class="control-button like-btn"><i class="far fa-heart"></i> 收藏</button>
+                        <button class="control-button share-btn"><i class="fas fa-share-alt"></i> 分享</button>
+                    </div>
+                </div>
+
+                <div class="game-description">
+                    <h2>游戏描述</h2>
+                    <p>《西部狙击手》是一款刺激的第一人称射击游戏，背景设置在美国西部荒野。玩家将扮演一名神枪手，完成各种挑战任务，击败敌人并成为传奇。</p>
+                    <p>游戏特点：</p>
+                    <ul>
+                        <li>精美的3D西部场景</li>
+                        <li>多样化的任务和挑战</li>
+                        <li>丰富的武器选择</li>
+                        <li>逼真的射击体验</li>
+                        <li>多个难度级别</li>
+                    </ul>
+                    
+                    <h2>如何游玩</h2>
+                    <p>使用鼠标瞄准和射击，键盘WASD移动角色，空格键跳跃。在每个关卡中消灭所有敌人并完成任务目标。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="related-games">
+            <h2>相关游戏</h2>
+            <div class="games-grid">
+                <!-- 相关游戏将由JavaScript动态生成，这里是示例 -->
+                <div class="game-card">
+                    <img src="https://via.placeholder.com/300x200?text=丛林狙击手" alt="丛林狙击手" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">丛林狙击手</h3>
+                        <p class="game-category">射击</p>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="https://via.placeholder.com/300x200?text=城市猎人" alt="城市猎人" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">城市猎人</h3>
+                        <p class="game-category">射击</p>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="https://via.placeholder.com/300x200?text=射击训练" alt="射击训练" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">射击训练</h3>
+                        <p class="game-category">射击</p>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <img src="https://via.placeholder.com/300x200?text=生存射击" alt="生存射击" class="game-image">
+                    <div class="game-info">
+                        <h3 class="game-title">生存射击</h3>
+                        <p class="game-category">射击</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="#">什么是HTML5游戏?</a></li>
+                    <li><a href="#">发行商</a></li>
+                    <li><a href="#">开发者</a></li>
+                    <li><a href="#">企业服务</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>帮助</h3>
+                <ul>
+                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>法律</h3>
+                <ul>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023-2024 HTML5Games.com</p>
+        </div>
+    </footer>
+
+    <script src="scripts/games-data.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html> 

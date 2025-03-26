@@ -1,0 +1,20 @@
+# robots.txt for HTML5Games.com
+# Last updated: 2024-07-15
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /game.html
+Allow: /about.html
+Allow: /scripts/
+Allow: /styles/
+Allow: /images/
+
+# Disallow admin areas
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://www.html5games.com/sitemap.xml
+
+# Crawl delay to prevent server overload
+Crawl-delay: 1 

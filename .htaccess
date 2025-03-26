@@ -1,0 +1,101 @@
+# .htaccess file for HTML5Games.com
+# Improves performance and SEO
+
+# Enable GZIP compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+  <FilesMatch "\.(js|css|html|xml|json)$">
+    SetOutputFilter DEFLATE
+  </FilesMatch>
+</IfModule>
+
+# Set browser caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/html "access plus 1 day"
+  ExpiresByType text/xml "access plus 1 day"
+</IfModule>
+
+# Set ETags
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|xml|gz|html)$">
+    Header append Vary: Accept-Encoding
+  </FilesMatch>
+  <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|webp|swf)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  <FilesMatch "\.(css)$">
+    Header set Cache-Control "max-age=2592000, public"
+  </FilesMatch>
+  <FilesMatch "\.(js)$">
+    Header set Cache-Control "max-age=2592000, private"
+  </FilesMatch>
+  <FilesMatch "\.(xml|txt)$">
+    Header set Cache-Control "max-age=86400, public, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=86400, private, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# URL rewriting for clean URLs
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Redirect HTTP to HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Redirect www to non-www
+  RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+  
+  # Redirect index.html to root
+  RewriteCond %{THE_REQUEST} ^.*/index\.html 
+  RewriteRule ^(.*)index\.html$ /$1 [R=301,L] 
+  
+  # Handle category URLs cleanly
+  RewriteRule ^category/([^/]+)/?$ index.html?category=$1 [L,QSA]
+  
+  # Handle game URLs cleanly
+  RewriteRule ^game/([^/]+)/?$ game.html?id=$1 [L,QSA]
+</IfModule>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Default character set
+AddDefaultCharset UTF-8
+
+# Specify MIME types
+<IfModule mod_mime.c>
+  AddType application/javascript .js
+  AddType text/css .css
+  AddType image/webp .webp
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  # XSS Protection
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # MIME type sniffing protection
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Frame embedding protection
+  Header set X-Frame-Options "SAMEORIGIN"
+  
+  # Referrer policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Error pages
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html 

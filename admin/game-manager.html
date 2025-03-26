@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Game Management Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .tab-content {
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .game-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .game-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .game-item:hover {
+            background-color: #f8f9fa;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">HTML5 Game Management Tool</h1>
+        
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="add-tab" data-bs-toggle="tab" data-bs-target="#add" type="button" role="tab">Add Game</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="batch-tab" data-bs-toggle="tab" data-bs-target="#batch" type="button" role="tab">Batch Add</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="manage-tab" data-bs-toggle="tab" data-bs-target="#manage" type="button" role="tab">Manage Games</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="export-tab" data-bs-toggle="tab" data-bs-target="#export" type="button" role="tab">Export Data</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <!-- Add Game Tab -->
+            <div class="tab-pane fade show active" id="add" role="tabpanel">
+                <h3>Add Single Game</h3>
+                <form id="add-game-form">
+                    <div class="mb-3">
+                        <label for="game-id" class="form-label">Game ID</label>
+                        <input type="text" class="form-control" id="game-id" required placeholder="e.g., my-game (only letters, numbers, and hyphens)">
+                    </div>
+                    <div class="mb-3">
+                        <label for="game-title" class="form-label">Game Title</label>
+                        <input type="text" class="form-control" id="game-title" required placeholder="e.g., My Game">
+                    </div>
+                    <div class="mb-3">
+                        <label for="game-category" class="form-label">Game Category</label>
+                        <input type="text" class="form-control" id="game-category" required placeholder="e.g., Puzzle, Shooting, Adventure, etc.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="game-image" class="form-label">Game Image URL</label>
+                        <input type="text" class="form-control" id="game-image" placeholder="e.g., assets/images/my-game.jpg">
+                    </div>
+                    <div class="mb-3">
+                        <label for="game-iframe" class="form-label">Game iframe URL</label>
+                        <input type="text" class="form-control" id="game-iframe" required placeholder="e.g., https://example.com/games/my-game/index.html">
+                    </div>
+                    <div class="mb-3">
+                        <label for="game-section" class="form-label">Add to Section</label>
+                        <select class="form-select" id="game-section" required>
+                            <option value="new">New Games</option>
+                            <option value="popular">Popular Games</option>
+                            <option value="recommended">Recommended Games</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Game</button>
+                </form>
+                <div class="results" id="add-results"></div>
+            </div>
+            
+            <!-- Batch Add Tab -->
+            <div class="tab-pane fade" id="batch" role="tabpanel">
+                <h3>Batch Add Games</h3>
+                <p>Please enter game information in the following format, one game per line:</p>
+                <p><code>gameID|gameTitle|category|imageURL|iframeURL|section(new/popular/recommended)</code></p>
+                <div class="mb-3">
+                    <textarea class="form-control" id="batch-games" rows="10" placeholder="Example:
+western-sniper|Western Sniper|Shooting|assets/images/western-sniper.jpg|https://example.com/games/western-sniper/index.html|new
+go-escape|Go Escape|Adventure|assets/images/go-escape.jpg|https://example.com/games/go-escape/index.html|popular"></textarea>
+                </div>
+                <button id="batch-add-btn" class="btn btn-primary">Batch Add</button>
+                <div class="results" id="batch-results"></div>
+            </div>
+            
+            <!-- Manage Games Tab -->
+            <div class="tab-pane fade" id="manage" role="tabpanel">
+                <h3>Manage Games</h3>
+                <div class="mb-3">
+                    <select class="form-select" id="section-filter">
+                        <option value="all">Show All Games</option>
+                        <option value="new">Only Show New Games</option>
+                        <option value="popular">Only Show Popular Games</option>
+                        <option value="recommended">Only Show Recommended Games</option>
+                    </select>
+                </div>
+                <div class="game-list" id="game-list">
+                    <!-- Game list will be displayed here -->
+                </div>
+            </div>
+            
+            <!-- Export Data Tab -->
+            <div class="tab-pane fade" id="export" role="tabpanel">
+                <h3>Export Game Data</h3>
+                <p>Click the button below to export all current game data in JavaScript format, then copy the code to the <code>scripts/games-data.js</code> file.</p>
+                <button id="export-btn" class="btn btn-primary">Export as JavaScript</button>
+                <div class="mb-3 mt-3">
+                    <textarea class="form-control" id="export-code" rows="15" readonly></textarea>
+                </div>
+                <button id="copy-btn" class="btn btn-secondary">Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Game data storage object
+        let gamesData = {
+            newGames: [],
+            popularGames: [],
+            recommendedGames: []
+        };
+        
+        // Load data from localStorage when page loads (if available)
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGamesData();
+            renderGameList();
+            
+            // Add form submission event
+            document.getElementById('add-game-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addSingleGame();
+            });
+            
+            // Batch add button click event
+            document.getElementById('batch-add-btn').addEventListener('click', batchAddGames);
+            
+            // Export button click event
+            document.getElementById('export-btn').addEventListener('click', exportGameData);
+            
+            // Copy button click event
+            document.getElementById('copy-btn').addEventListener('click', copyToClipboard);
+            
+            // Section filter change event
+            document.getElementById('section-filter').addEventListener('change', renderGameList);
+        });
+        
+        // Load game data from localStorage
+        function loadGamesData() {
+            try {
+                // Try to load data from localStorage
+                const savedData = localStorage.getItem('gamesData');
+                if (savedData) {
+                    gamesData = JSON.parse(savedData);
+                } else {
+                    // If no saved data, try to load from parent directory's games-data.js
+                    fetch('../scripts/games-data.js')
+                        .then(response => response.text())
+                        .then(text => {
+                            // Extract JavaScript object
+                            const regex = /const gamesData = ([\s\S]*?);(\s*$|\/\/)/;
+                            const match = text.match(regex);
+                            if (match && match[1]) {
+                                try {
+                                    // Safely parse JavaScript object
+                                    gamesData = JSON.parse(match[1].replace(/'/g, '"'));
+                                    saveGamesData();
+                                    renderGameList();
+                                } catch (e) {
+                                    console.error('Failed to parse games-data.js:', e);
+                                }
+                            }
+                        })
+                        .catch(err => console.error('Failed to load games-data.js:', err));
+                }
+            } catch (e) {
+                console.error('Failed to load game data:', e);
+            }
+        }
+        
+        // Save game data to localStorage
+        function saveGamesData() {
+            try {
+                localStorage.setItem('gamesData', JSON.stringify(gamesData));
+            } catch (e) {
+                console.error('Failed to save game data:', e);
+            }
+        }
+        
+        // Add single game
+        function addSingleGame() {
+            const gameId = document.getElementById('game-id').value.trim();
+            const gameTitle = document.getElementById('game-title').value.trim();
+            const gameCategory = document.getElementById('game-category').value.trim();
+            const gameImage = document.getElementById('game-image').value.trim() || `assets/images/${gameId}.jpg`;
+            const gameIframe = document.getElementById('game-iframe').value.trim();
+            const gameSection = document.getElementById('game-section').value;
+            
+            // Validate game ID format
+            if (!/^[a-z0-9-]+$/.test(gameId)) {
+                showResults('add-results', 'Error: Game ID can only contain lowercase letters, numbers, and hyphens', 'danger');
+                return;
+            }
+            
+            // Check if game ID already exists
+            if (isGameIdExists(gameId)) {
+                showResults('add-results', `Error: Game with ID "${gameId}" already exists`, 'danger');
+                return;
+            }
+            
+            // Create game object
+            const gameObj = {
+                id: gameId,
+                title: gameTitle,
+                category: gameCategory,
+                image: gameImage,
+                url: '#',
+                iframeUrl: gameIframe
+            };
+            
+            // Add to appropriate game array
+            switch (gameSection) {
+                case 'new':
+                    gamesData.newGames.push(gameObj);
+                    break;
+                case 'popular':
+                    gamesData.popularGames.push(gameObj);
+                    break;
+                case 'recommended':
+                    gamesData.recommendedGames.push(gameObj);
+                    break;
+            }
+            
+            // Save and update game list
+            saveGamesData();
+            renderGameList();
+            
+            // Show success message
+            showResults('add-results', `Successfully added game "${gameTitle}" to ${getSectionName(gameSection)}`, 'success');
+            
+            // Reset form
+            document.getElementById('add-game-form').reset();
+        }
+        
+        // Batch add games
+        function batchAddGames() {
+            const batchText = document.getElementById('batch-games').value.trim();
+            if (!batchText) {
+                showResults('batch-results', 'Please enter game data', 'danger');
+                return;
+            }
+            
+            const lines = batchText.split('\n');
+            let successCount = 0;
+            let errorCount = 0;
+            let errorMessages = [];
+            
+            lines.forEach(line => {
+                if (!line.trim()) return; // Skip empty lines
+                
+                const parts = line.split('|');
+                if (parts.length < 6) {
+                    errorCount++;
+                    errorMessages.push(`Format error: ${line}`);
+                    return;
+                }
+                
+                const gameId = parts[0].trim();
+                const gameTitle = parts[1].trim();
+                const gameCategory = parts[2].trim();
+                const gameImage = parts[3].trim();
+                const gameIframe = parts[4].trim();
+                const gameSection = parts[5].trim();
+                
+                // Validate game ID format
+                if (!/^[a-z0-9-]+$/.test(gameId)) {
+                    errorCount++;
+                    errorMessages.push(`Game ID format error: ${gameId}`);
+                    return;
+                }
+                
+                // Check if game ID already exists
+                if (isGameIdExists(gameId)) {
+                    errorCount++;
+                    errorMessages.push(`Game with ID "${gameId}" already exists`);
+                    return;
+                }
+                
+                // Validate section
+                if (!['new', 'popular', 'recommended'].includes(gameSection)) {
+                    errorCount++;
+                    errorMessages.push(`Invalid game section: ${gameSection}`);
+                    return;
+                }
+                
+                // Create game object
+                const gameObj = {
+                    id: gameId,
+                    title: gameTitle,
+                    category: gameCategory,
+                    image: gameImage,
+                    url: '#',
+                    iframeUrl: gameIframe
+                };
+                
+                // Add to appropriate game array
+                switch (gameSection) {
+                    case 'new':
+                        gamesData.newGames.push(gameObj);
+                        break;
+                    case 'popular':
+                        gamesData.popularGames.push(gameObj);
+                        break;
+                    case 'recommended':
+                        gamesData.recommendedGames.push(gameObj);
+                        break;
+                }
+                
+                successCount++;
+            });
+            
+            // Save and update game list
+            saveGamesData();
+            renderGameList();
+            
+            // Show results
+            let resultMessage = `Successfully added ${successCount} games`;
+            if (errorCount > 0) {
+                resultMessage += `, ${errorCount} games failed to add:<br>`;
+                resultMessage += errorMessages.join('<br>');
+                showResults('batch-results', resultMessage, 'warning');
+            } else {
+                showResults('batch-results', resultMessage, 'success');
+            }
+            
+            // Clear batch add text box
+            document.getElementById('batch-games').value = '';
+        }
+        
+        // Export game data in JavaScript format
+        function exportGameData() {
+            const data = `const gamesData = ${JSON.stringify(gamesData, null, 4)};`;
+            document.getElementById('export-code').value = data;
+            showResults('export-code', 'Data exported. Copy this code to scripts/games-data.js', 'info');
+        }
+        
+        // Copy exported data to clipboard
+        function copyToClipboard() {
+            const exportArea = document.getElementById('export-code');
+            exportArea.select();
+            document.execCommand('copy');
+            alert('Code copied to clipboard');
+        }
+        
+        // Show results message
+        function showResults(elementId, message, type) {
+            const resultsElement = document.getElementById(elementId);
+            resultsElement.innerHTML = message;
+            resultsElement.className = `results alert alert-${type}`;
+            resultsElement.style.display = 'block';
+            
+            // Auto-hide after 5 seconds for success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    resultsElement.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Render game list
+        function renderGameList() {
+            const gameList = document.getElementById('game-list');
+            const sectionFilter = document.getElementById('section-filter').value;
+            
+            gameList.innerHTML = '';
+            
+            // Get games based on filter
+            let games = [];
+            
+            if (sectionFilter === 'all' || sectionFilter === 'new') {
+                gamesData.newGames.forEach(game => games.push({...game, section: 'new'}));
+            }
+            
+            if (sectionFilter === 'all' || sectionFilter === 'popular') {
+                gamesData.popularGames.forEach(game => games.push({...game, section: 'popular'}));
+            }
+            
+            if (sectionFilter === 'all' || sectionFilter === 'recommended') {
+                gamesData.recommendedGames.forEach(game => games.push({...game, section: 'recommended'}));
+            }
+            
+            // Display game list
+            if (games.length === 0) {
+                gameList.innerHTML = '<p class="text-center">No games found</p>';
+                return;
+            }
+            
+            games.forEach(game => {
+                const gameItem = document.createElement('div');
+                gameItem.className = 'game-item';
+                gameItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>${game.title}</h5>
+                            <p class="text-muted">${game.category} | ID: ${game.id} | Section: ${getSectionName(game.section)}</p>
+                        </div>
+                        <button class="btn btn-sm btn-danger delete-btn" data-id="${game.id}" data-section="${game.section}">Delete</button>
+                    </div>
+                `;
+                
+                // Add delete event
+                gameItem.querySelector('.delete-btn').addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const section = this.getAttribute('data-section');
+                    deleteGame(id, section);
+                });
+                
+                gameList.appendChild(gameItem);
+            });
+        }
+        
+        // Delete game
+        function deleteGame(id, section) {
+            if (confirm(`Are you sure you want to delete the game with ID "${id}"?`)) {
+                let index = -1;
+                
+                switch (section) {
+                    case 'new':
+                        index = gamesData.newGames.findIndex(game => game.id === id);
+                        if (index !== -1) gamesData.newGames.splice(index, 1);
+                        break;
+                    case 'popular':
+                        index = gamesData.popularGames.findIndex(game => game.id === id);
+                        if (index !== -1) gamesData.popularGames.splice(index, 1);
+                        break;
+                    case 'recommended':
+                        index = gamesData.recommendedGames.findIndex(game => game.id === id);
+                        if (index !== -1) gamesData.recommendedGames.splice(index, 1);
+                        break;
+                }
+                
+                saveGamesData();
+                renderGameList();
+            }
+        }
+        
+        // Check if game ID already exists
+        function isGameIdExists(id) {
+            return gamesData.newGames.some(game => game.id === id) ||
+                   gamesData.popularGames.some(game => game.id === id) ||
+                   gamesData.recommendedGames.some(game => game.id === id);
+        }
+        
+        // Get section name
+        function getSectionName(section) {
+            switch (section) {
+                case 'new': return 'New Games';
+                case 'popular': return 'Popular Games';
+                case 'recommended': return 'Recommended Games';
+                default: return 'Unknown Section';
+            }
+        }
+    </script>
+</body>
+</html> 
